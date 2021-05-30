@@ -10,6 +10,7 @@ from core.database import db
 from core.utils.responses import response_with
 import core.utils.responses as resp
 from core.config import DevelopmentConfig, ProductionConfig, TestingConfig
+from posts.routes import post_routes
 
 load_dotenv('.env')
 
@@ -34,6 +35,8 @@ def create_app():
     db.init_app(app)
     with app.app_context():
         db.create_all()
+
+    app.register_blueprint(post_routes, url_prefix='/api/posts')
 
     # START GLOBAL HTTP CONFIGURATIONS
     @app.after_request
